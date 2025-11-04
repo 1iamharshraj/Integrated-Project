@@ -1,0 +1,31 @@
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { Navigation } from "@/components/layout/navigation";
+import { Footer } from "@/components/layout/footer";
+import { ThemeProvider } from "@/components/theme-provider";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "ZeTheta FinArcade - AI-Driven Investment Advisory",
+  description: "India's first fully autonomous AI-driven investment advisory platform",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider>
+          <Navigation />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}

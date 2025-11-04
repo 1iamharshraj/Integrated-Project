@@ -1,0 +1,1104 @@
+{
+	"info": {
+		"_postman_id": "zetheta-finarcade-api",
+		"name": "ZeTheta FinArcade API",
+		"description": "Complete API collection for ZeTheta FinArcade - India's first fully autonomous AI-driven investment advisory platform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"SecurePass123!\",\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone\": \"9876543210\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "register"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"access_token\", jsonData.access_token);",
+									"    pm.environment.set(\"refresh_token\", jsonData.refresh_token);",
+									"    pm.environment.set(\"user_id\", jsonData.user.id);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"SecurePass123!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "login"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "profile"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"first_name\": \"Jane\",\n  \"last_name\": \"Smith\",\n  \"phone\": \"9876543211\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "profile"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{refresh_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/refresh",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "refresh"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/logout",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "logout"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Risk Profiling",
+			"item": [
+				{
+					"name": "Submit Questionnaire",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"answers\": {\n    \"question_1\": 3,\n    \"question_2\": 4,\n    \"question_3\": 2,\n    \"question_4\": 5,\n    \"question_5\": 3\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/risk-profiling/questionnaire",
+							"host": ["{{base_url}}"],
+							"path": ["api", "risk-profiling", "questionnaire"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Demographics",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"region\": \"north\",\n  \"age\": 35,\n  \"income\": 750000,\n  \"occupation\": \"engineer\",\n  \"joint_family_status\": true,\n  \"language_preference\": \"hindi\",\n  \"religious_event_participation\": 0.7,\n  \"festival_spending\": 50000,\n  \"gold_investment_ratio\": 0.15,\n  \"real_estate_allocation\": 0.40\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/risk-profiling/demographics",
+							"host": ["{{base_url}}"],
+							"path": ["api", "risk-profiling", "demographics"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Life Events",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"life_events\": [\n    {\n      \"event_type\": \"marriage\",\n      \"impact\": \"high\",\n      \"date\": \"2024-01-01\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/risk-profiling/life-events",
+							"host": ["{{base_url}}"],
+							"path": ["api", "risk-profiling", "life-events"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Behavioral Data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"behavioral_data\": {\n    \"portfolio_check_frequency\": 3,\n    \"portfolio_turnover_rate\": 0.25,\n    \"major_life_event_occurred\": false\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/risk-profiling/behavioral",
+							"host": ["{{base_url}}"],
+							"path": ["api", "risk-profiling", "behavioral"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Calculate Risk Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/risk-profiling/calculate",
+							"host": ["{{base_url}}"],
+							"path": ["api", "risk-profiling", "calculate"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Risk Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/risk-profiling/profile/{{user_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "risk-profiling", "profile", "{{user_id}}"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Portfolio",
+			"item": [
+				{
+					"name": "Get Portfolio",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/portfolio/{{user_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "portfolio", "{{user_id}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Optimize Portfolio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": {{user_id}},\n  \"risk_category\": \"moderate\",\n  \"investment_amount\": 500000,\n  \"goals\": [\n    {\n      \"goal_name\": \"Retirement\",\n      \"years_to_goal\": 20,\n      \"target_amount\": 5000000\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/portfolio/optimize",
+							"host": ["{{base_url}}"],
+							"path": ["api", "portfolio", "optimize"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rebalance Portfolio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": {{user_id}},\n  \"target_allocation\": {\n    \"equity\": 0.50,\n    \"debt\": 0.30,\n    \"gold\": 0.10,\n    \"international\": 0.10\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/portfolio/rebalance",
+							"host": ["{{base_url}}"],
+							"path": ["api", "portfolio", "rebalance"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Portfolio Performance",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/portfolio/performance/{{user_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "portfolio", "performance", "{{user_id}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Holding",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"portfolio_id\": 1,\n  \"asset_type\": \"equity\",\n  \"asset_name\": \"RELIANCE\",\n  \"quantity\": 100,\n  \"current_price\": 2500.00,\n  \"purchase_price\": 2400.00,\n  \"allocation\": 25.0,\n  \"ai_recommendation\": \"hold\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/portfolio/holdings",
+							"host": ["{{base_url}}"],
+							"path": ["api", "portfolio", "holdings"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Holding",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/portfolio/holdings/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "portfolio", "holdings", "1"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Market Data",
+			"item": [
+				{
+					"name": "Get Market Indices",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/market/indices",
+							"host": ["{{base_url}}"],
+							"path": ["api", "market", "indices"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Market Sentiment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/market/sentiment",
+							"host": ["{{base_url}}"],
+							"path": ["api", "market", "sentiment"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Market Predictions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/market/predictions/RELIANCE",
+							"host": ["{{base_url}}"],
+							"path": ["api", "market", "predictions", "RELIANCE"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Financial News",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/market/news?limit=20",
+							"host": ["{{base_url}}"],
+							"path": ["api", "market", "news"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Technical Indicators",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/market/technical-indicators/RELIANCE",
+							"host": ["{{base_url}}"],
+							"path": ["api", "market", "technical-indicators", "RELIANCE"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Behavioral Analytics",
+			"item": [
+				{
+					"name": "Get Behavioral Metrics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/behavioral/metrics/{{user_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "behavioral", "metrics", "{{user_id}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Behavioral Metrics",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": {{user_id}},\n  \"portfolio_check_frequency\": 3,\n  \"trade_volume\": 50000,\n  \"life_event\": false,\n  \"sentiment_avg\": 0.65,\n  \"sentiment_variance\": 0.15,\n  \"email_tone_positive_ratio\": 0.70,\n  \"calendar_stress_events_count\": 2,\n  \"nudge_acceptance_rate\": 0.80,\n  \"reaction_to_market_volatility\": \"moderate\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/behavioral/update",
+							"host": ["{{base_url}}"],
+							"path": ["api", "behavioral", "update"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Behavioral Insights",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/behavioral/insights/{{user_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "behavioral", "insights", "{{user_id}}"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Goals & Planning",
+			"item": [
+				{
+					"name": "Get Goals",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/goals/{{user_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "goals", "{{user_id}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Goal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": {{user_id}},\n  \"goal_name\": \"Retirement Fund\",\n  \"target_amount\": 5000000,\n  \"target_date\": \"2044-01-01\",\n  \"goal_type\": \"retirement\",\n  \"priority\": \"high\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/goals/create",
+							"host": ["{{base_url}}"],
+							"path": ["api", "goals", "create"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Goal",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"goal_name\": \"Updated Retirement Fund\",\n  \"target_amount\": 6000000,\n  \"current_amount\": 500000\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/goals/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "goals", "1"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Goal Progress",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/goals/progress/{{user_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "goals", "progress", "{{user_id}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Goal",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/goals/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "goals", "1"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AI Insights",
+			"item": [
+				{
+					"name": "Get AI Insights",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/ai/insights/{{user_id}}?unread_only=false&limit=20",
+							"host": ["{{base_url}}"],
+							"path": ["api", "ai", "insights", "{{user_id}}"],
+							"query": [
+								{
+									"key": "unread_only",
+									"value": "false"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Recommendations",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": {{user_id}}\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ai/recommendations",
+							"host": ["{{base_url}}"],
+							"path": ["api", "ai", "recommendations"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get AI Predictions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/ai/predictions/RELIANCE",
+							"host": ["{{base_url}}"],
+							"path": ["api", "ai", "predictions", "RELIANCE"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark Insight as Read",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/ai/insights/mark-read/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "ai", "insights", "mark-read", "1"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "KYC",
+			"item": [
+				{
+					"name": "Get KYC Documents",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/kyc/{{user_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "kyc", "{{user_id}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload KYC Document",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": {{user_id}},\n  \"document_type\": \"pan\",\n  \"document_url\": \"https://example.com/documents/pan.pdf\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/kyc",
+							"host": ["{{base_url}}"],
+							"path": ["api", "kyc"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify KYC Document",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"verified\",\n  \"verification_data\": {\n    \"verified_by\": \"admin\",\n    \"verified_at\": \"2024-01-01T00:00:00\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/kyc/1/verify",
+							"host": ["{{base_url}}"],
+							"path": ["api", "kyc", "1", "verify"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Get Transactions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/transactions/{{user_id}}?page=1&per_page=20",
+							"host": ["{{base_url}}"],
+							"path": ["api", "transactions", "{{user_id}}"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "20"
+								},
+								{
+									"key": "type",
+									"value": "buy",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "completed",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Transaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": {{user_id}},\n  \"portfolio_id\": 1,\n  \"type\": \"buy\",\n  \"asset_name\": \"RELIANCE\",\n  \"quantity\": 10,\n  \"price\": 2500.00,\n  \"amount\": 25000.00,\n  \"status\": \"pending\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/transactions",
+							"host": ["{{base_url}}"],
+							"path": ["api", "transactions"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Transaction Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"completed\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/transactions/1/status",
+							"host": ["{{base_url}}"],
+							"path": ["api", "transactions", "1", "status"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Education",
+			"item": [
+				{
+					"name": "Get Education Progress",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/education/{{user_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "education", "{{user_id}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Education Progress",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": {{user_id}},\n  \"course_id\": \"finance-101\",\n  \"course_name\": \"Introduction to Finance\",\n  \"progress_percent\": 75.5,\n  \"completed_modules\": [\"module-1\", \"module-2\", \"module-3\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/education/progress",
+							"host": ["{{base_url}}"],
+							"path": ["api", "education", "progress"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "News & Sentiment",
+			"item": [
+				{
+					"name": "Scrape News",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/news/scrape",
+							"host": ["{{base_url}}"],
+							"path": ["api", "news", "scrape"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sentiment Analysis",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/news/sentiment?limit=50",
+							"host": ["{{base_url}}"],
+							"path": ["api", "news", "sentiment"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "date",
+									"value": "2024-01-01",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refresh_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}
+
